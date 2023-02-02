@@ -1,0 +1,21 @@
+.character{
+    width: 33%;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.character img {
+    border-radius: 50%;
+    animation-name: characterhover;
+    animation-direction: reverse;
+    animation-duration: 10s;
+}
+
+@keyframes characterhover {
+    20% {opacity: 0;}
+    100% {opacity: 1;}
+}
+.character span{
+    font-size: 2em;
+    color:grey;
+}
