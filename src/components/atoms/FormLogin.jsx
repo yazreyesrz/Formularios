@@ -1,47 +1,36 @@
 import { useRef } from 'react';
-import {useState} from 'react'
 import { Link } from 'react-router-dom';
 import '../../assets/styles/FormLogin.css'
 import Imagen1 from '../../assets/img/imagen1.jpg'
 function FormLogin() {
-    const [description, setDescription] = useState({msn: "CC", v : 1})
-    const [username, setUsername] = useState('')
-    const [stateForm, setStateForm] = useState('')
+    const formdataL=useRef();
     const handlerClick = (e) => {
-        e.preventDefault()
-        setDescription({msn: username})    
+        e.preventDefault();
+        const formData = new FormData(formdataL.current);
+        let URL="http://34.225.239.102/api/iniciar";
+        console.log(formData.get(''));
+        let options ={
+            method:'POST',
+            headers:{"Content-Type":"'application/json"},
+            body:JSON.stringify({
+                    usuario: formData.get('usuario'),
+                    contrasenia: formData.get('contrasenia')
+            })
+        }
+        fetch(URL ,options)
+        .then(response => response.json())
+        .then(data=>{alert(JSON.stringify(data))})
     }
-    const handlerChange = (e) => {
-        console.log(stateForm.username)
-       setStateForm({...stateForm,username:""})
-        console.log(stateForm.username)
-    }
-    const handlerChangePassword = (e) => {
-        setStateForm({...stateForm,password: e.target.value})
-    }
-    /*function FormLogin(){
-        const form=useRef();
-        const handlerChange=(e)=>
-            e.preventDefault();
-            to="/Regist"
-    }*/
-    
-            return (
-                
-                    
-               
-            <form >
+            return (  
+            <form ref={formdataL}>
             <div id='Form'>
-
-
             <div >
-
                     <img class src={Imagen1} alt="Login" className='loginp' />
                         </div>
                     <div className=''>
-                    <input type="text" placeholder='Username' value={stateForm.username} onChange={handlerChange}/>
+                    <input type="text" placeholder='Username' name="usuario"/>
                     <br /><br />
-                    <input type="password" placeholder='Contraseña' value ={stateForm.password} onChange={handlerChangePassword}/>
+                    <input type="password" placeholder='Contraseña'  name="contrasenia"/>
                     <br /><br />
                     <button id='Boton' onClick={handlerClick}>Iniciar sesión</button>
                     <br />
@@ -50,11 +39,9 @@ function FormLogin() {
                     <Link to="/autobuses">¿Tu camion no esta registrado?  registralo aqui</Link>
                     </div>
                     </div>
-                   
-           
             
 {            <div>
-                <label>{JSON.stringify(stateForm)}</label>
+                
             </div>}
         </form>
         
